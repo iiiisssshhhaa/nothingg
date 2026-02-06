@@ -9,7 +9,8 @@
     body {
         margin: 0;
         height: 100vh;
-        background: url("https://images.unsplash.com/photo-1518893063532-6c2a3d83e7a2") center/cover no-repeat;
+        background: url("https://images.unsplash.com/photo-1518893063532-6c2a3d83e7a2")
+        center/cover no-repeat;
         overflow: hidden;
         font-family: 'Segoe UI', sans-serif;
         display: flex;
@@ -19,58 +20,61 @@
 
     .card {
         background: rgba(255, 255, 255, 0.95);
-        padding: 25px;
-        border-radius: 25px;
+        padding: 26px;
+        border-radius: 24px;
         text-align: center;
         width: 90%;
         max-width: 360px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.25);
         z-index: 2;
     }
 
     h1 {
         color: #e91e63;
         font-size: 24px;
+        margin-bottom: 12px;
     }
 
     p {
         font-size: 15px;
-        margin-bottom: 20px;
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 22px;
     }
 
     .buttons {
         position: relative;
         height: 80px;
-        margin-top: 10px;
     }
 
     button {
         padding: 12px 26px;
-        font-size: 18px;
+        font-size: 17px;
         border-radius: 30px;
         border: none;
         cursor: pointer;
         position: absolute;
-        animation: beat 1.4s infinite;
-        transition: left 0.4s ease, transform 0.2s;
+        animation: beat 1.6s infinite;
+        transition: left 0.4s ease, transform 0.3s ease;
     }
 
     @keyframes beat {
         0% { transform: scale(1); }
-        50% { transform: scale(1.12); }
+        50% { transform: scale(1.08); }
         100% { transform: scale(1); }
     }
 
     #yes {
         background: #e91e63;
         color: white;
-        left: 10%;
+        left: 12%;
+        box-shadow: 0 8px 20px rgba(233,30,99,0.4);
     }
 
     #no {
-        background: #999;
+        background: #aaa;
         color: white;
-        right: 10%;
+        right: 12%;
     }
 
     .heart {
@@ -95,10 +99,12 @@
 </audio>
 
 <div class="card">
-    <h1>Kya aap mere Valentine banoge? 💘</h1>
+    <h1>Kya aap mere Valentine banogi? 💘</h1>
+
     <p>
-        Main aapko kabhi khatam na hone wali muskan,  
-        pyaar aur bohot saari chocolates ka wada karta hoon 🍫❤️
+        Main aapko kabhi khatam na hone wali muskaan,<br>
+        pyaar aur bohot saari chocolates 🍫<br>
+        ka wada karta hoon.
     </p>
 
     <div class="buttons">
@@ -113,9 +119,10 @@
     const music = document.getElementById("music");
 
     let resetTimer;
+    let yesScale = 1;
 
-    const initialYesLeft = "10%";
-    const initialNoRight = "10%";
+    const yesInitial = "12%";
+    const noInitial = "12%";
 
     function runNo() {
         clearTimeout(resetTimer);
@@ -127,19 +134,22 @@
         noBtn.style.top = y + "px";
         noBtn.style.right = "auto";
 
-        // YES moves to center
-        yesBtn.style.left = "35%";
+        // YES moves toward center
+        yesBtn.style.left = "36%";
 
-        // Reset after she stops trying
-        resetTimer = setTimeout(resetButtons, 1200);
+        // YES grows every time NO runs
+        yesScale += 0.08;
+        yesBtn.style.transform = `scale(${yesScale})`;
+
+        resetTimer = setTimeout(resetButtons, 1400);
     }
 
     function resetButtons() {
-        noBtn.style.top = "auto";
         noBtn.style.left = "auto";
-        noBtn.style.right = initialNoRight;
+        noBtn.style.top = "auto";
+        noBtn.style.right = noInitial;
 
-        yesBtn.style.left = initialYesLeft;
+        yesBtn.style.left = yesInitial;
     }
 
     noBtn.addEventListener("mouseover", runNo);
@@ -150,8 +160,10 @@
         music.play();
         document.body.innerHTML = `
             <div class="card">
-                <h1>Love you ji ❤️🥰</h1>
-                <p>Aapne mera din bana diya 💖</p>
+                <h1>Love you ❤️</h1>
+                <p>
+                    Aapne mera din bana diya ji 😘
+                </p>
                 <p>Happy Valentine’s Day 💝</p>
             </div>
         `;
@@ -167,7 +179,7 @@
             heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
-        }, 250);
+        }, 260);
     }
 
     createHearts();
